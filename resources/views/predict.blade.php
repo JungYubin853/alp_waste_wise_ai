@@ -189,7 +189,7 @@
                         if (!frozen) {
                             predictFrame();
                         }
-                    }, 1500);
+                    }, 2000);
                 })
                 .catch(() => alert("Camera access denied"));
         }
