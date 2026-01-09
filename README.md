@@ -1,59 +1,139 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ♻️ WasteWise AI – Garbage Classifier
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+WasteWise AI is a web-based garbage classification system that uses a live camera feed or uploaded images to predict waste categories using an AI backend. It provides real-time predictions along with confidence visualization using charts.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* 📷 **Live Camera Detection**
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+  * Start, stop, pause (freeze), and resume camera feed
+  * Real-time AI predictions from webcam frames
+  * Mirrored camera preview for natural user experience
 
-## Learning Laravel
+* 📊 **Prediction Confidence Chart**
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+  * Displays confidence scores for all predicted classes
+  * Updates dynamically using Chart.js
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+* 🖼️ **Image Upload Prediction**
 
-## Laravel Sponsors
+  * Upload an image manually for classification
+  * Sends image to backend for prediction
+  * AI Suggestion powered with Gemini AI
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+* ⚡ **Real-Time Inference**
 
-### Premium Partners
+  * Automatically captures frames every 1.5 seconds
+  * Sends frames to an AI prediction API
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+---
 
-## Contributing
+## 🛠️ Technologies Used
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### Frontend
 
-## Code of Conduct
+* HTML5
+* CSS3
+* JavaScript (Vanilla)
+* [Chart.js](https://www.chartjs.org/) for confidence visualization
+* WebRTC (`getUserMedia`) for camera access
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Backend
 
-## Security Vulnerabilities
+* AI prediction API running locally
+* Endpoint:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+  ```
+  POST http://127.0.0.1:8001/predict
+  ```
+* Accepts image files and returns JSON predictions
 
-## License
+---
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## 📂 Project Structure
+
+```
+.
+├── index.html        # Main frontend UI
+└── README.md         # Project documentation
+```
+
+---
+
+## 🔌 API Response Format
+
+The backend `/predict` endpoint is expected to return JSON in the following format:
+
+```json
+{
+  "class": "Plastic",
+  "confidence": 0.87,
+  "all_predictions": {
+    "Plastic": 0.87,
+    "Paper": 0.08,
+    "Metal": 0.03,
+    "Glass": 0.02
+    ...
+  }
+}
+```
+
+---
+
+## How to Use ♻️ WasteWise AI
+
+### 1. Start the Backend
+
+Make sure your AI model server is running on:
+
+```
+http://127.0.0.1:8001
+```
+
+### 2. Open the Frontend
+
+Open `index.html` in a modern browser (Chrome recommended).
+
+### 3. Live Camera Detection
+
+1. Click **Start Camera**
+2. Allow camera permissions
+3. View real-time predictions
+4. Use:
+
+   * **Capture** → freeze prediction
+   * **Resume** → continue live detection
+   * **Stop Camera** → turn off camera
+
+### 4. Upload Image
+
+1. Choose an image file
+2. Click **Predict Image**
+3. View prediction results with AI suggestion
+
+---
+
+## 🔒 Permissions & Notes
+
+* Camera access is required for live detection
+* Runs fully on the client side except for AI inference
+* Best used on desktop browsers
+* HTTPS is needed for camera access in production
+
+---
+
+## 🌱 Future Improvements
+
+* Add waste category icons
+* Display history of predictions
+* Improve mobile responsiveness
+* Add model loading status
+* Deploy backend to cloud
+
+---
+
+## 📜 License
+
+This project is open-source and intended for educational and research purposes.
