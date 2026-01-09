@@ -1,6 +1,6 @@
 # ♻️ WasteWise AI – Garbage Classifier
 
-**WasteWise AI** is a web-based garbage classification system that uses a live camera feed or uploaded images to predict waste categories through an AI-powered backend. It provides real-time predictions along with confidence visualization using interactive charts.
+**WasteWise AI** The WasteWise AI website is a web-based application designed to help users identify and properly classify different types of waste using artificial intelligence. Users can interact with the system in two ways: through real-time camera detection or by uploading an image of waste. By clicking the “Start Camera” button, the website activates the user’s device camera and continuously analyzes the waste shown in front of it. The system sends captured image frames to a Python-based AI model, which classifies the waste and returns confidence scores for each category. These confidence values are displayed visually in a dynamic bar chart to help users understand the model’s decision. Users may pause the camera using the “Capture” button to freeze the current result, resume live detection, or stop the camera entirely. Alternatively, users can upload an image, after which the system performs waste classification and provides an expert sustainability explanation powered by AI, including disposal recommendations. Overall, the website demonstrates how artificial intelligence, computer vision, and web technologies can be integrated to support responsible waste management and promote sustainable behavior.
 
 ---
 
