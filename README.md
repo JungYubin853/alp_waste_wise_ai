@@ -1,139 +1,157 @@
 # ♻️ WasteWise AI – Garbage Classifier
 
-WasteWise AI is a web-based garbage classification system that uses a live camera feed or uploaded images to predict waste categories using an AI backend. It provides real-time predictions along with confidence visualization using charts.
+**WasteWise AI** is a web-based garbage classification system that uses a live camera feed or uploaded images to predict waste categories through an AI-powered backend. It provides real-time predictions along with confidence visualization using interactive charts.
 
 ---
 
 ## Features
 
-* 📷 **Live Camera Detection**
+### 📷 Live Camera Detection
 
-  * Start, stop, pause (freeze), and resume camera feed
-  * Real-time AI predictions from webcam frames
-  * Mirrored camera preview for natural user experience
+* Start, stop, pause (freeze), and resume the camera feed
+* Real-time AI predictions from webcam frames
+* Mirrored camera preview for a more natural user experience
 
-* 📊 **Prediction Confidence Chart**
+### 📊 Prediction Confidence Chart
 
-  * Displays confidence scores for all predicted classes
-  * Updates dynamically using Chart.js
+* Displays confidence scores for all predicted classes
+* Dynamically updates using **Chart.js**
 
-* 🖼️ **Image Upload Prediction**
+### 🖼️ Image Upload Prediction
 
-  * Upload an image manually for classification
-  * Sends image to backend for prediction
-  * AI Suggestion powered with Gemini AI
+* Upload images manually for classification
+* Sends images to the backend for prediction
+* Includes AI-generated suggestions powered by **Gemini AI**
 
-* ⚡ **Real-Time Inference**
+### ⚡ Real-Time Inference
 
-  * Automatically captures frames every 1.5 seconds
-  * Sends frames to an AI prediction API
-
----
-
-## 🛠️ Technologies Used
-
-### Frontend
-
-* HTML5
-* CSS3
-* JavaScript (Vanilla)
-* [Chart.js](https://www.chartjs.org/) for confidence visualization
-* WebRTC (`getUserMedia`) for camera access
-
-### Backend
-
-* AI prediction API running locally
-* Endpoint:
-
-  ```
-  POST http://127.0.0.1:8001/predict
-  ```
-* Accepts image files and returns JSON predictions
+* Automatically captures frames every **1.5 seconds**
+* Sends frames to the AI prediction API for processing
 
 ---
 
-## 📂 Project Structure
+## How to Use WasteWise AI
+
+### 1️. Start the Backend (AI Model Server)
+
+#### Prerequisites
+
+Ensure the following are installed:
+
+* **Herd**
+* **Python 3.10.x**
+* **Visual Studio Code**
+
+#### Setup Steps
+
+1. Place the project folder inside your Herd directory
+   **Example (Windows):**
+
+   ```
+   C:/Users/{your-device-name}/Herd
+   ```
+
+2. Open a terminal and navigate to:
+
+   ```
+   garbage-classifier2-ml/api
+   ```
+
+3. Activate the virtual environment:
+
+   ```
+   venv\Scripts\activate
+   ```
+
+4. Start the AI model server:
+
+   ```
+   uvicorn api_server:app --host 127.0.0.1 --port 8000
+   ```
+
+#### ⚠️ Port Error Fix
+
+If **Error 13** occurs:
+
+* Use another port (e.g., `8001`)
+* Update the API endpoint in:
+
+  * `PredictController.php`
+  * `predict.blade.php`
+
+Change:
 
 ```
-.
-├── index.html        # Main frontend UI
-└── README.md         # Project documentation
+http://127.0.0.1:8000/predict
+```
+
+To:
+
+```
+http://127.0.0.1:8001/predict
+```
+
+Ensure the AI server is running at:
+
+```
+http://127.0.0.1:8000 (or your chosen port)
 ```
 
 ---
 
-## 🔌 API Response Format
+### 2️. Start the Web Application (Frontend)
 
-The backend `/predict` endpoint is expected to return JSON in the following format:
+1. Open **Herd**, go to the **Sites** page, and click the **unlocked lock icon** to enable HTTPS
 
-```json
-{
-  "class": "Plastic",
-  "confidence": 0.87,
-  "all_predictions": {
-    "Plastic": 0.87,
-    "Paper": 0.08,
-    "Metal": 0.03,
-    "Glass": 0.02
-    ...
-  }
-}
+   > ⚠️ This is required because insecure (`http`) sites block camera access.
+2. Open the project in **Visual Studio Code**
+3. Run the following commands:
+
+   ```
+   composer install
+   php artisan migrate
+   npm install
+   npm run dev
+   ```
+
+---
+
+### 3️. Open the Application
+
+Open the following URL in a modern browser (Chrome recommended):
+
+```
+https://alp_waste_wise_ai.test
 ```
 
 ---
 
-## How to Use ♻️ WasteWise AI
-
-### 1. Start the Backend
-
-Make sure your AI model server is running on:
-
-```
-http://127.0.0.1:8001
-```
-
-### 2. Open the Frontend
-
-Open `index.html` in a modern browser (Chrome recommended).
-
-### 3. Live Camera Detection
+## 🎥 Live Camera Detection
 
 1. Click **Start Camera**
 2. Allow camera permissions
 3. View real-time predictions
-4. Use:
+4. Available controls:
 
-   * **Capture** → freeze prediction
-   * **Resume** → continue live detection
-   * **Stop Camera** → turn off camera
+   * **Capture** → Freeze prediction
+   * **Resume** → Continue live detection
+   * **Stop Camera** → Turn off camera
 
-### 4. Upload Image
+---
+
+## 🖼️ Upload Image Prediction
 
 1. Choose an image file
 2. Click **Predict Image**
-3. View prediction results with AI suggestion
+3. View classification results along with AI-generated suggestions
 
 ---
 
 ## 🔒 Permissions & Notes
 
 * Camera access is required for live detection
-* Runs fully on the client side except for AI inference
-* Best used on desktop browsers
-* HTTPS is needed for camera access in production
+* AI inference runs on the backend; all other logic runs client-side
+* Best experience on desktop browsers
+* **HTTPS is required** for camera access in production environments
 
 ---
-
-## 🌱 Future Improvements
-
-* Add waste category icons
-* Display history of predictions
-* Improve mobile responsiveness
-* Add model loading status
-* Deploy backend to cloud
-
----
-
-## 📜 License
-
-This project is open-source and intended for educational and research purposes.
