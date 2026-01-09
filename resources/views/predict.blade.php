@@ -9,6 +9,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+        /* html element */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -28,7 +29,7 @@
             margin-bottom: 20px;
             color: #2c3e50;
             font-size: 2.2em;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .grid {
@@ -103,7 +104,7 @@
         /* ========================================
            ENHANCED EXPERT ANALYSIS CARD STYLES
         ======================================== */
-        
+
         #expert-card {
             margin-top: 20px;
             display: none;
@@ -122,6 +123,7 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -140,8 +142,15 @@
         }
 
         @keyframes shimmer {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.6;
+            }
         }
 
         .expert-header {
@@ -159,8 +168,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.1);
+            }
         }
 
         .expert-header h3 {
@@ -250,8 +266,13 @@
         }
 
         @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Loading state for expert card */
@@ -276,7 +297,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Highlight important information */
@@ -293,11 +316,11 @@
             .expert-header h3 {
                 font-size: 1.2em;
             }
-            
+
             .expert-content {
                 padding: 20px;
             }
-            
+
             #gemini-result {
                 font-size: 1em;
             }
@@ -402,29 +425,41 @@
 
         /* ------------------ CAMERA ------------------ */
         function startCamera() {
+
+            // (video only, no audio)
             navigator.mediaDevices.getUserMedia({
                     video: true
                 })
                 .then(s => {
                     stream = s;
+                    // Attach the camera stream to the <video> element
                     video.srcObject = stream;
-
+                    // This runs when the video metadata (size, duration, etc.) is loaded
                     video.onloadedmetadata = () => {
+
+                        // Make the video element visible
                         video.style.display = "block";
+                        // Start playing the video stream
                         video.play();
                     };
-
                     frozen = false;
                     resultText.innerText = "Live prediction running";
 
+                    // Start the drawing loop (usually copies video frames to a canvas)
                     requestAnimationFrame(drawLoop);
 
+                    // Run predictions repeatedly every 2 seconds
                     intervalId = setInterval(() => {
+
+                        // Only predict if the app is not frozen
                         if (!frozen) {
                             predictFrame();
                         }
+
                     }, 2000);
                 })
+
+                // If the user denies camera access or an error occurs
                 .catch(() => alert("Camera access denied"));
         }
 
@@ -441,6 +476,7 @@
         }
 
         /* ------------------ DRAW LOOP ------------------ */
+        // Camera (video) → Canvas → Image Blob → Python API → Prediction
         function drawLoop() {
             if (!frozen && video.videoWidth > 0) {
                 canvas.width = video.videoWidth;
